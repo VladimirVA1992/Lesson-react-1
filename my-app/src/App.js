@@ -1,15 +1,11 @@
 import logo from "./logo.svg";
 import "./App.css";
+import React from "react";
 
 //Тут все в декларативном стиле, только одна строчка подподает под описания императивного стиля, и тег а, но я в этом не уверен
 export const App = () => {
 	const currentDate = new Date();
 	const currentYear = currentDate.getFullYear();
-	const DOC = document;
-
-	const createTagP = () => {
-		return DOC.createElement("p");
-	};
 
 	// return (
 	// 	<div className="App">
@@ -32,31 +28,39 @@ export const App = () => {
 	// 	</div>
 	// );
 
-	const container = DOC.createElement("div");
-	container.classList.add("App");
-
-	const appHeader = DOC.createElement("header");
-	appHeader.classList.add("App-header");
-
-	const appImg = DOC.createElement("img");
-	appImg.classList.add("App-logo");
-	appImg.src = `${logo}`;
-	appImg.alt = "logo";
-
-	const appPNote = createTagP();
-	appPNote.textContent = "Edit src/App.js and save to reload.";
-
-	const appLink = DOC.createElement("a");
-	appLink.classList.add("App-link");
-	appLink.href = "https://reactjs.org";
-	appLink.target = "_blank";
-	appLink.rel = "noopener noreferer";
-	appLink.textContent = "Learn React";
-
-	const appCurrentDateP = createTagP();
-	appCurrentDateP.textContent = `Текущий год ${currentYear}`;
-
-	DOC.body.append(container);
-	container.append(appHeader);
-	appHeader.append(appImg, appPNote, appLink, appCurrentDateP);
+	return React.createElement(
+		"div",
+		{
+			className: "App",
+		},
+		React.createElement(
+			"header",
+			{
+				className: "App-header",
+			},
+			React.createElement("img", {
+				className: "App-logo",
+				src: logo,
+				alt: "logo",
+			}),
+			React.createElement(
+				"p",
+				null,
+				"Edit ",
+				React.createElement("code", null, "src/App.js"),
+				" and save to reload",
+			),
+			React.createElement(
+				"a",
+				{
+					className: "App-link",
+					href: "https://reactjs.org",
+					target: "_blank",
+					rel: "noopener noreferrer",
+				},
+				"Learn React",
+			),
+			React.createElement("p", null, `Текущий год ${currentYear}`),
+		),
+	);
 };
