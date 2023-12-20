@@ -3,8 +3,15 @@ import styles from "./App.module.css"
 
 export const App = () => {
 
-	const NUMS = ['1','2','3','4','5','6','7','8','9','0']
-	const OPERATORS = ['-','+','=','C']
+	const BUTTONS = [['1','2','3','4','5','6','7','8','9','0'], ['-','+','=','C']]
+	// const BUTTONS = {"NUMS": ['1','2','3','4','5','6','7','8','9','0'], "OPERATORS": ['-','+','=','C']}
+	// вариант оставить все символы в без разделения и проверять регуляркой в одном случае на то что это число ( что-то вроде этого /^\d+$/.test(val)), а во втором случае что это не число
+	// так же можно сделать до утилитные функции с методом евери как пример с числами:
+	// const digits_only = string => [...string].every(c => '0123456789'.includes(c))
+	// console.log(digits_only('123')) true
+
+	// const NUMS = ['1','2','3','4','5','6','7','8','9','0']
+	// const OPERATORS = ['-','+','=','C']
 
 	const [operand1, setOperand1] = useState('')
 	const [operand2, setOperand2] = useState('')
@@ -72,12 +79,12 @@ export const App = () => {
 				<div className={isResult ? styles.resultDone : styles.displayOutput} >{operator === '=' ? result : currentValue}</div>
 				<div className={styles.actionsWrap}>
 					<div className={styles.numbers}>
-						{NUMS.map((item, index) => {
+						{BUTTONS[0].map((item, index) => {
 							return <button className={styles.btn} onClick={() => enterValue(item)} key={index * 33}>{item}</button>
 						})}
 					</div>
 					<div className={styles.operators}>
-						{OPERATORS.map((item, index) => {
+						{BUTTONS[1].map((item, index) => {
 							return <button className={styles.btn} onClick={() => addOperator(item)} key={index + 1 * 55}>{item}</button>
 						})}
 					</div>
