@@ -1,75 +1,57 @@
 .app {
-	width: 100%;
-	height: 100vh;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	gap: 15px;
+	max-width: 500px;
+	margin: 0 auto;
+	gap: 10px;
+	padding: 20px 30px;
+	border: 1px solid #fff;
+	border-radius: 20px;
+	margin-top: 20px;
+	background: rgb(64, 145, 194);
+	background: linear-gradient(
+		90deg,
+		rgba(64, 145, 194, 0.8603816526610644) 0%,
+		rgba(64, 64, 154, 0.7063200280112045) 52%,
+		rgba(0, 129, 156, 1) 100%
+	);
 }
 
-.form {
-	border: 1px solid #000;
-	border-radius: 10px;
-	padding: 20px;
+h1 {
+	text-transform: uppercase;
+}
+
+.todo {
 	display: flex;
+	gap: 5px;
 	flex-direction: column;
-	gap: 10px;
 }
 
-.form input {
-	min-width: 280px;
-	padding: 10px;
-	border-radius: 10px;
-	border: 1px solid #000;
+.todoItem {
+	border: 1px solid #fff;
+	border-radius: 20px;
+	padding: 5px 10px;
+	background-color: #fff;
 }
 
-.formBtn {
-	cursor: pointer;
-	height: 40px;
-	border-radius: 10px;
-	border: none;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background-color: green;
-	color: #fff;
-	font-weight: 700;
-	font-size: 16px;
-	flex-grow: 1;
+.loader {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 45px;
+	height: 45px;
+	border: 5px solid gray;
+	border-radius: 50%;
+	border-left-color: transparent;
+	animation: loader 1s infinite;
 }
 
-.formBtn:hover {
-	background-color: rgb(0, 97, 0);
-}
-
-.formBtnRed {
-	cursor: pointer;
-	height: 40px;
-	border-radius: 10px;
-	border: none;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background-color: red;
-	color: #fff;
-	font-weight: 700;
-	font-size: 16px;
-	flex-grow: 1;
-}
-
-.formBtnRed:hover {
-	background-color: rgb(194, 0, 0);
-}
-
-.btnGroup {
-	display: flex;
-	justify-content: space-between;
-	gap: 10px;
-	padding-top: 20px;
-}
-
-.errorLabel {
-	color: red;
-	text-decoration: underline;
+@keyframes loader {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
 }
