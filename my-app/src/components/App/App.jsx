@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react"
 import styles from "./App.module.css"
+import {ref, onValue, push, set, remove} from 'firebase/database'
+import { db } from '../../firebase'
 
 export const App = () => {
-	const [products, setProducts] = useState([])
+	const [products, setProducts] = useState({})
 	const [isLoading, setIsLoading] = useState(false)
 	const [isCreating, setIsCreating] = useState(false)
 	const [todoValue, setTodoValue] = useState("")
-	const [refreshTodos, setRefreshTodos] = useState(false)
 	const [isUpdating, setIsUpdating] = useState(false)
 	const [todoValueUpdete, setTodoValueUpdete] = useState()
 	const [isDeleting, setIsDeleting] = useState(false)
@@ -14,17 +15,15 @@ export const App = () => {
 	const [sortedProducts, setSortedProducts] = useState([])
 
     useEffect(() => {
-        setIsLoading(true);
+		const productDbRef = ref(db, 'products')
 
-		setTimeout(() => {
-			fetch('http://localhost:3004/mybase')
-				.then((loadedData) => loadedData.json())
-				.then((loadedProducts) => {
-					setProducts(loadedProducts)
-				})
-				.finally(() => setIsLoading(false))
-		}, 1000)
-    }, [refreshTodos])
+		return onValue(productDbRef, (snapshort) => {
+			const loadedProducts = snapshort.val() || {}
+
+			setProducts(loadedProducts)
+			setIsLoading(false)
+		})
+    }, [])
 
 	const addTodo = (e, todoValue) => {
 		e.preventDefault();
@@ -32,50 +31,47 @@ export const App = () => {
 
 		const newId = Date.now()
 
-        fetch('http://localhost:3004/mybase', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json;charset=utf-8' },
-            body: JSON.stringify({
-				id: String(newId),
-				text: todoValue,
-            }),
-        })
-            .then((rawResponse) => rawResponse.json())
-            .then((response) => {
-                setRefreshTodos(!refreshTodos);
-            })
-            .finally(() => setIsCreating(false))
+		const productDbRef = ref(db, 'products')
+
+		push(productDbRef, {
+			id: String(newId),
+			text: todoValue,
+		})
+			.then((response) => {
+				console.log('Новоя задача добавлена', response)
+			})
+			.finally(() => setIsCreating(false))
     }
 
 	const updateTodo = (id, newText) => {
         setIsUpdating(true)
 
-        fetch(`http://localhost:3004/mybase/${id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json;charset=utf-8' },
-            body: JSON.stringify({
-				id: id,
-				text: newText,
-            }),
-        })
-            .then((rawResponse) => rawResponse.json())
-            .then((response) => {
-                setRefreshTodos(!refreshTodos)
-            })
-            .finally(() => setIsUpdating(false))
-    }
+		const productDbRef = ref(db, `products/${id}`)
+
+		set(productDbRef, {
+			id: id,
+			text: newText,
+		})
+			.then((response) => {
+					console.log('Задача обновлена', response)
+			})
+			.finally(() => {
+					setIsUpdating(false);
+			})
+	}
 
 	const deleteTodo = (id) => {
-        setIsDeleting(true);
+        setIsDeleting(true)
 
-        fetch(`http://localhost:3004/mybase/${id}`, {
-            method: 'DELETE',
-        })
-            .then((rawResponse) => rawResponse.json())
-            .then((response) => {
-                setRefreshTodos(!refreshTodos)
-            })
-            .finally(() => setIsDeleting(false))
+		const productDbRef = ref(db, `products/${id}`)
+
+		remove(productDbRef)
+				.then((response) => {
+					console.log('Задача удалена', response)
+				})
+				.finally(() => {
+					setIsDeleting(false)
+				})
     }
 
 	const openPopup = (id) => {
@@ -92,8 +88,10 @@ export const App = () => {
 
 	const sortTodoInAlphabetically = () => {
 
-		const copyProduts = [...products]
-		const sortedTexts = copyProduts.sort((a, b) => {
+		let timleslArr = []
+		Object.entries(products).map(([id, { text }]) => timleslArr.push({id, text}))
+
+		const sortedTexts = timleslArr.sort((a, b) => {
 			return a.text.localeCompare(b.text)
 	 	})
 
@@ -145,7 +143,7 @@ export const App = () => {
 			{isLoading ? (
 				<div className={styles.loader}></div>
 			) : (
-				isSort ? sortedProducts.map(({ id, text }) => (
+				isSort ? Object.entries(sortedProducts).map(([id, { text }]) => (
 						<li key={id} className={styles.todoItem}>
 							{text}
 							<div className={styles.btnBlockAction}>
@@ -154,7 +152,7 @@ export const App = () => {
 							</div>
 						</li>
 					))
-				: 	products.map(({ id, text }) => (
+				: 	Object.entries(products).map(([id, { text }]) => (
 						<li key={id} className={styles.todoItem}>
 							{text}
 							<div className={styles.btnBlockAction}>
