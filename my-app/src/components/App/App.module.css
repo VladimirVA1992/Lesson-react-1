@@ -22,10 +22,29 @@ h1 {
 	text-transform: uppercase;
 }
 
-.todo {
+.menu {
+	list-style: none;
 	display: flex;
-	gap: 5px;
-	flex-direction: column;
+	gap: 10px;
+	padding-top: 10px;
+}
+
+.menuItem {
+	display: inline-block;
+	padding: 5px;
+	border-radius: 10px;
+	border: 1px solid #fff;
+	font-size: 16px;
+}
+
+.menuItem > a {
+	text-decoration: none;
+	color: #000;
+}
+
+.menuItem:hover {
+	background-color: #fff;
+	cursor: pointer;
 }
 
 .todoItem {
@@ -38,104 +57,9 @@ h1 {
 	background-color: #fff;
 }
 
-.loader {
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: 45px;
-	height: 45px;
-	border: 5px solid gray;
-	border-radius: 50%;
-	border-left-color: transparent;
-	animation: loader 1s infinite;
-}
-
-@keyframes loader {
-	0% {
-		transform: rotate(0deg);
-	}
-	100% {
-		transform: rotate(360deg);
-	}
-}
-
-form[data-popup] {
-	position: absolute;
-	top: 50px;
-	left: 50%;
-	transform: translate(-50%, 0);
-	width: 500px;
-	height: 200px;
-	background-color: white;
-	border: 1px solid #000;
-	border-radius: 20px;
-	display: flex;
-	gap: 10px;
-	flex-direction: column;
-	justify-content: center;
-	padding: 20px;
-}
-
-form[data-popup="popupClose"] {
-	visibility: hidden;
-}
-
-.form[data-popup="popupOpen"] {
-	visibility: visible;
-}
-
 .btnBlockAction {
 	display: flex;
 	gap: 5px;
-}
-
-.createTodoForm {
-	display: flex;
-	justify-content: space-between;
-	gap: 20px;
-}
-
-.inputCreate {
-	width: 100%;
-	border: none;
-	border-radius: 20px;
-	padding: 5px 15px;
-}
-
-.createBtn {
-	border: none;
-	padding: 5px 10px;
-	border-radius: 20px;
-	cursor: pointer;
-	background-color: #009933;
-	color: #fff;
-}
-
-.createBtn:hover {
-	background-color: #336600;
-}
-
-.updateBtn {
-	border: none;
-	padding: 5px 10px;
-	border-radius: 20px;
-	cursor: pointer;
-	background-color: #0066ff;
-	color: #fff;
-}
-
-.updateBtn:hover {
-	background-color: #0000cc;
-}
-
-.deleteBtn {
-	border: none;
-	padding: 5px 10px;
-	border-radius: 20px;
-	cursor: pointer;
-	background-color: #ff0000;
-	color: #fff;
 }
 
 .deleteBtn:hover {
@@ -145,44 +69,4 @@ form[data-popup="popupClose"] {
 .updateBtnAction {
 	border: none;
 	border-radius: 20px;
-}
-
-.inputUpdatePopup {
-	padding: 5px 10px;
-}
-
-.formSort {
-	display: flex;
-	gap: 20px;
-	padding-bottom: 25px;
-}
-
-.inputSearch {
-	width: 100%;
-	max-width: 300px;
-	border: none;
-	border-radius: 20px;
-	padding: 5px 15px;
-}
-
-.btnSearch {
-	border: none;
-	padding: 5px 10px;
-	border-radius: 20px;
-	cursor: pointer;
-	background-color: #009933;
-	color: #fff;
-}
-
-.btnSearch:hover {
-	background-color: #336600;
-}
-
-.btnSearchActive {
-	border: none;
-	padding: 5px 10px;
-	border-radius: 20px;
-	cursor: pointer;
-	background-color: #336600;
-	color: #fff;
 }

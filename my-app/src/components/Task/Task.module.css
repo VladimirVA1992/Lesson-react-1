@@ -1,0 +1,56 @@
+.task {
+	border: 1px solid #fff;
+	border-radius: 20px;
+	padding: 5px 10px;
+	background-color: #fff;
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+
+.updateBtn {
+	border: none;
+	padding: 5px 10px;
+	border-radius: 20px;
+	cursor: pointer;
+	background-color: #0066ff;
+	color: #fff;
+}
+
+.updateBtn:hover {
+	background-color: #0000cc;
+}
+
+.deleteBtn {
+	border: none;
+	padding: 5px 10px;
+	border-radius: 20px;
+	cursor: pointer;
+	color: #fff;
+	background-color: #cc3300;
+}
+
+.deleteBtn:hover {
+	background-color: #cc0000;
+}
+
+.inputUpdatePopup {
+	width: 100%;
+	border: 1px solid #000;
+	border-radius: 20px;
+	padding: 5px 15px;
+}
+
+form[data-popup="popupClose"] {
+	visibility: hidden;
+}
+
+.form[data-popup="popupOpen"] {
+	visibility: visible;
+}
+
+.actionBlock {
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 10px;
+}
