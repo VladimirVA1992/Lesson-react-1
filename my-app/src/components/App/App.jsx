@@ -4,8 +4,14 @@ import { MainPage } from "../MainPage/MainPage"
 import { Todos } from "../Todos/Todos"
 import { Task } from "../Task/Task"
 import { Page404 } from "../404/Page404"
+import { useEffect, useState } from "react"
+import { AppContext } from "../../app-context"
 
 export const App = () => {
+
+	const getTodos = () => {
+		return fetch(`http://localhost:3004/mybase`)
+	}
 
     return (
 	<div className={styles.app}>
@@ -20,12 +26,14 @@ export const App = () => {
 				</li>
 			</ul>
 		</div>
-		<Routes>
-			<Route path="/" element={<MainPage />} />
-			<Route path="/todos" element={<Todos />} />
-			<Route path="/task/:id" element={<Task />} />
-			<Route path="*" element={<Page404 />} />
-		</Routes>
+		<AppContext.Provider value={getTodos}>
+			<Routes>
+				<Route path="/" element={<MainPage />} />
+				<Route path="/todos" element={<Todos />} />
+				<Route path="/task/:id" element={<Task />} />
+				<Route path="*" element={<Page404 />} />
+			</Routes>
+		</AppContext.Provider>
 	</div>
     )
 }

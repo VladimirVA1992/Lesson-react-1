@@ -1,20 +1,25 @@
 import { Link } from 'react-router-dom'
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import styles from "./Todos.module.css"
+import { AppContext } from '../../app-context'
 
 export const Todos = () => {
-	const [todos, setTodos] = useState([])
+
+	const getTodos = useContext(AppContext)
+
 	const [sortedTodos, setSortedTodos] = useState([])
 	const [isSort, setIsSort] = useState(false)
 	const [isCreating, setIsCreating] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
+	const [todos, setTodos] = useState([])
 	const [refreshTodos, setRefreshTodos] = useState(false)
+
 	const [todoValue, setTodoValue] = useState("")
 
 	useEffect(() => {
 		setIsLoading(true);
 
-		fetch(`http://localhost:3004/mybase`)
+		getTodos()
 			.then((rawResponse) => rawResponse.json())
 			.then((response) => {
 				setTodos(response)
